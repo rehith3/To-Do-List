@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <link rel="stylesheet" href="todolist.css">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+body{
+    background-color: #995FC6;
+    margin: 50px;
+}
+header{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+.sec {
+    display: flex;
+    justify-content: center;
+}
+.tasks{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;  
+}
+#addbtn{
+    display: inline-block;
+    width: 100%;
+    border: none;
+    background-color: #20ffc7;
+    padding: 1px;
+    font-size: 15px;
+    text-align: center;
+}
+#editbtn{
+    display: inline-block;
+    width: 100%;
+    border: none;
+    background-color: #3dbecf;
+    padding: 2px;
+    font-size: 15px;
+    text-align: center;
+}
+#deletebtn{
+    display: inline-block;
+    width: 100%;
+    border: none;
+    background-color: #ff1f1f;
+    padding: 2px;
+    font-size: 15px;
+    text-align: center;
+}
+input{
+    height: 40px;
+    font-size: 25px;
+    width: 47%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 15px;
+}
+ul {
+    height: 40px;
+    font-size: 25px;
+    width: 47%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    list-style-type: none;
+}
+ul li{
+    background: white;
+    border-bottom:7px solid #995FC6;
+}
+    </style>
+</head>
+<body>
+    <header><h1>To do List</h1></header>
+    <div class="sec">
+        <input type="text" id="txt" placeholder="Enter the tasks">
+        <div class="buttons">
+        <button onclick="addLI()" id="addbtn">Add</button>
+        <button onclick="editLI()" id="editbtn">Edit</button>
+        <button onclick="deleteLI()" id="deletebtn">Delete</button>
+        </div>
+    </div>
+
+    <div class="tasks">
+        <ul id="list"> 
+            <li>Jog</li>
+            <li>Code</li>
+            <li>Complete Assignment</li>
+        </ul>
+    </div>
+        
+    
+        <script>
+            var inputText = document.getElementById("txt");
+var items = document.querySelectorAll("#list li");
+var tab = [], index;
+             
+for(var i = 0; i < items.length; i++){
+    tab.push(items[i].innerHTML);
+}
+
+for(var i = 0; i < items.length; i++){
+    
+    items[i].onclick = function(){
+        index = tab.indexOf(this.innerHTML);
+        inputText.value = this.innerHTML;
+    };
+    
+}
+
+function refreshArray()
+{
+    tab.length = 0;
+    items = document.querySelectorAll("#list li");
+    for(var i = 0; i < items.length; i++){
+        tab.push(items[i].innerHTML);
+    }
+}
+function addLI(){
+    
+    var listNode = document.getElementById("list"),
+        textNode = document.createTextNode(inputText.value),
+        liNode = document.createElement("LI");
+        
+    liNode.appendChild(textNode);
+    listNode.appendChild(liNode);
+        
+    refreshArray();
+    liNode.onclick = function(){
+        index = tab.indexOf(liNode.innerHTML);
+        inputText.value = liNode.innerHTML;
+    };
+        
+}
+             
+function editLI(){
+    items[index].innerHTML = inputText.value;
+    refreshArray();
+}
+
+function deleteLI(){
+    
+        refreshArray();
+        if(items.length > 0){
+            items[index].parentNode.removeChild(items[index]);
+            inputText.value = "";
+        }
+}
+        </script>
+</body>
+</html>
